@@ -14,9 +14,13 @@ class Pokemon
     return self
   end
 
-  def self.find_by_id(id)
-    dog_data = DB[:conn].execute("SELECT * FROM dogs WHERE id = ?", id) #fill in question mark with what comes after, in this case id
-    new_from_db(dog_data[0])
+  def self.new_from_db(row)
+    Pokemon.new(id: row[0], name: row[1], type: row[2])
+  end
+
+  def self.find(id, db)
+    pokemon_data = db.execute("SELECT * FROM pokemon WHERE id = ?", id) 
+    new_from_db(pokemon_data[0])
   end
 
 end
